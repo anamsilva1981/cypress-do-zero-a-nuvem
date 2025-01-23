@@ -11,12 +11,15 @@ describe('Central de Atendimento ao Cliente TAT', () => {
 
 
   it('Preenche os campos obrigatórios e envia o formulário', () => {
+
+    const longText = Cypress._.repeat('texto que sera repetido', 10)
     // Preenchimento do formulario
     cy.get('#firstName').type('Valmir')
     cy.get('#lastName').type('Soriano')
     cy.get('#email').type('teste@teste.com.br')
     cy.get('#phone').type('11000000000')
-    cy.get('#open-text-area').type('Texto teste para preenchimento do campo de texto ')
+    cy.get('#open-text-area').type(longText) // utilizado em textos muito longos
+    // cy.get('#open-text-area').type('Texto teste para preenchimento do campo de texto ') -> forma normal
     cy.get('button[type="submit"]').click()
 
     // Verifica o retorno do formulário enviado 
