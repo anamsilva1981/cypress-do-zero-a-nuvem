@@ -9,7 +9,6 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.title().should('be.equal', 'Central de Atendimento ao Cliente TAT')
   })
 
-
   it('Preenche os campos obrigatórios e envia o formulário', () => {
 
     // const longText = Cypress._.repeat('texto que sera repetido', 10)
@@ -46,13 +45,47 @@ describe('Central de Atendimento ao Cliente TAT', () => {
       .should('have.value', '')
   })
 
-  it.only('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
+  it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
     //Ações
     cy.get('#firstName').type('Valmir')
     cy.get('#lastName').type('Soriano')
     cy.get('#email').type('teste@teste.com,br')
-    // cy.get('#phone').type('11000000000')
+    cy.get('#phone').type('11000000000')
     cy.get('#open-text-area').type('Texto teste para preenchimento do campo de texto ') 
+    cy.get('#phone-checkbox').click()
+    cy.get('button[type="submit"]').click()
+
+    // Resultado esperado 
+    cy.get('.error').should('be.visible')
+  })
+
+  it.only('preenche e limpa os campos nome, sobrenome, email e telefone', () => {
+    //Ações
+    cy.get('#firstName')
+      .type('Valmir')
+      .should('have.value', 'Valmir')
+      .clear()
+      .should('have.value', '')
+    cy.get('#lastName')
+      .type('Soriano')
+      .should('have.value', 'Soriano')
+      .clear()
+      .should('have.value', '')
+    cy.get('#email')
+      .type('teste@teste.com.br')
+      .should('have.value', 'teste@teste.com.br')
+      .clear()
+      .should('have.value', '')
+    cy.get('#phone')
+      .type('11000000000')
+      .should('have.value', '11000000000')
+      .clear()
+      .should('have.value', '')
+    cy.get('#open-text-area')
+      .type('Texto teste para preenchimento do campo de texto ') 
+      .should('have.value', 'Texto teste para preenchimento do campo de texto ')
+      .clear()
+      .should('have.value', '')
     cy.get('#phone-checkbox').click()
     cy.get('button[type="submit"]').click()
 
