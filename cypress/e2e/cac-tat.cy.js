@@ -6,7 +6,16 @@ describe('Central de Atendimento ao Cliente TAT', () => {
   })
 
   it('verifica o título da aplicação', () => {
-    cy.visit('./src/index.html')
     cy.title().should('be.equal', 'Central de Atendimento ao Cliente TAT')
+  })
+
+
+  it('Preenche o campo obrigatório e envia o formulário', () => {
+    cy.get('#firstName').type('Valmir')
+    cy.get('#lastName').type('Soriano')
+    cy.get('#email').type('teste@teste.com.br')
+    cy.get('#phone').type('11000000000')
+    cy.get('#open-text-area').type('Texto teste para preenchimento do campo de texto ')
+    cy.get('button[type="submit"]').click()
   })
 })
